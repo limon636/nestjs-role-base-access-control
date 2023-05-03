@@ -1,0 +1,44 @@
+### Sign in
+
+@url = http://localhost:3000
+
+@admin = { "username": "admin","password": "admin" }
+
+@user = { "username": "user","password": "user" }
+
+###
+
+# @name login
+POST {{url}}/auth/login
+Content-Type: application/json
+
+{{admin}}
+
+###
+
+# @name userLogin
+POST {{url}}/auth/login
+Content-Type: application/json
+
+{{user}}
+### 
+@token = {{login.response.body.$.access_token}}
+@userToken = {{userLogin.response.body.$.access_token}}
+### GET Profile
+
+GET {{url}}/auth/profile
+Content-Type: application/json
+Authorization: Bearer {{userToken}}
+
+### GET Health
+
+GET {{url}}/auth/health
+Content-Type: application/json
+
+### RBAC --------
+
+### GET Settings
+
+GET {{url}}/auth/settings
+Content-Type: application/json
+Authorization: Bearer {{token}}
